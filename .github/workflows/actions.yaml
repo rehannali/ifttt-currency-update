@@ -1,0 +1,29 @@
+name: Execute Python Script
+
+on:
+  schedule:
+    - cron: "0 9,21 * * *"
+
+jobs:
+  execute-python-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo Content
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: install python packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Execute Python Script
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
+          IFTTT_KEY: ${{ secrets.IFTTT_KEY }}
+
+        run: python -B manage.py

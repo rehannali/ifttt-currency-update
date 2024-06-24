@@ -30,7 +30,7 @@ def send_to_ifttt():
     data = get_currency_rate()
 
     if not data:
-        return
+        return None
 
     response = requests.post(url=url, json=data, headers=headers)
 
